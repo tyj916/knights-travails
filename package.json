@@ -1,0 +1,13 @@
+{
+  "name": "knights-travails",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "A project that shows the shortest possible way to get a knight in chess to move from one square to another.",
+  "main": "knightsTravails.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
