@@ -3,97 +3,17 @@ import { LinkedList } from '../linked-lists/linkedLists.js';
 export { knightMoves };
 
 function getPossibleMoves(start) {
-  function rightTwoUp(start) {
-    let tmp = start.slice();
-
-    tmp[0] += 2;
-    tmp[1] += 1;
-
-    return tmp;
-  }
-
-  function rightTwoDown(start) {
-    let tmp = start.slice();
-
-    tmp[0] += 2;
-    tmp[1] -= 1;
-
-    return tmp;
-  }
-
-  function leftTwoUp(start) {
-    let tmp = start.slice();
-
-    tmp[0] -= 2;
-    tmp[1] += 1;
-    
-    return tmp;
-  }
-  
-  function leftTwoDown(start) {
-    let tmp = start.slice();
-
-    tmp[0] -= 2;
-    tmp[1] -= 1;
-
-    return tmp;
-  }
-
-  function upTwoRight(start) {
-    let tmp = start.slice();
-
-    tmp[1] += 2;
-    tmp[0] += 1;
-
-    return tmp;
-  }
-
-  function upTwoLeft(start) {
-    let tmp = start.slice();
-
-    tmp[1] += 2;
-    tmp[0] -= 1;
-
-    return tmp;
-  }
-
-  function downTwoRight(start) {
-    let tmp = start.slice();
-
-    tmp[1] -= 2;
-    tmp[0] += 1;
-
-    return tmp;
-  }
-
-  function downTwoLeft(start) {
-    let tmp = start.slice();
-
-    tmp[1] -= 2;
-    tmp[0] -= 1;
-
-    return tmp;
-  }
-
-  const allMoves = [
-    rightTwoUp,
-    rightTwoDown,
-    leftTwoUp,
-    leftTwoDown,
-    upTwoRight,
-    upTwoLeft,
-    downTwoRight,
-    downTwoLeft,
-  ];
+  const possibleX = [2, 2, 1, 1, -1, -1, -2, -2];
+  const possibleY = [1, -1, 2, -2, 2, -2, 1, -1];
 
   const possibleMoves = [];
 
-  allMoves.forEach((move) => {
-    const end = move(start);
-    if (end[0] >= 0 && end[0] < 8 && end[1] >= 0 && end[1] < 8) {
-      possibleMoves.push(end);
+  for (let i = 0; i < 8; i++) {
+    const move = [start[0] + possibleX[i], start[1] + possibleY[i]];
+    if (move[0] >= 0 && move[0] < 8 && move[1] >= 0 && move[1] < 8) {
+      possibleMoves.push(move);
     }
-  });
+  }
 
   return possibleMoves;
 }
@@ -115,17 +35,32 @@ function getShorterMove(possibleMoves, target) {
   return shorterMove;
 }
 
+function hasEnd(moves, end) {
+  for (let move of moves) {
+    if (move.toString() === end.toString()) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 function knightMoves(start, end) {
-  
+  const possibleMoves = getPossibleMoves(start);
+
+  while (possibleMoves.length > 0) {
+    const move = possibleMoves.shift();
+    console.log(move);
+  }
+
+  // const shorterMove = getShorterMove(possibleMoves, end);
+  // console.log(shorterMove);
+
+  return [];
 }
 
 // driver script
 (function() {
-  const possibleMoves = getPossibleMoves([3,3]);
-  console.log(possibleMoves);
-  const shorterMove = getShorterMove(possibleMoves, [2,7]);
-  console.log(shorterMove);
-
-  // const moves = knightMoves([3,3],[0,0]);
-  // console.log(moves);
+  const moves = knightMoves([3,3],[1,2]);
+  console.log(moves);
 })();
