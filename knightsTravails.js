@@ -1,5 +1,3 @@
-import { LinkedList } from '../linked-lists/linkedLists.js';
-
 export { knightMoves };
 
 function getPossibleMoves(start) {
@@ -16,33 +14,6 @@ function getPossibleMoves(start) {
   }
 
   return possibleMoves;
-}
-
-function getShorterMove(possibleMoves, target) {
-  let shorterMove = possibleMoves[0];
-  let shorterDistance = Math.abs(target[0] - shorterMove[0]) + Math.abs(target[1] - shorterMove[1]);
-
-  for (let i = 1; i < possibleMoves.length; i++) {
-    const move = possibleMoves[i];
-    const distance = Math.abs(target[0] - move[0]) + Math.abs(target[1] - move[1]);
-
-    if (distance < shorterDistance ) {
-      shorterMove = move;
-      shorterDistance = distance;
-    }
-  }
-
-  return shorterMove;
-}
-
-function hasEnd(moves, end) {
-  for (let move of moves) {
-    if (move.toString() === end.toString()) {
-      return true;
-    }
-  }
-
-  return false;
 }
 
 function Move(coordinate, prev = null) {
