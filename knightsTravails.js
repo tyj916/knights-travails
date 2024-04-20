@@ -45,22 +45,41 @@ function hasEnd(moves, end) {
   return false;
 }
 
-function knightMoves(start, end) {
-  const possibleMoves = getPossibleMoves(start);
+function Square(coordinate, prev = null) {
+  const possibleMoves = getPossibleMoves(coordinate);
 
-  while (possibleMoves.length > 0) {
-    const move = possibleMoves.shift();
-    console.log(move);
+  return {
+    coordinate,
+    prev,
+    possibleMoves,
+  }
+}
+
+function knightMoves(start, end) {
+  const queue = [Square(start)];
+  const path = [];
+
+  while (queue.length > 0) {
+    const currentSquare = queue.shift();
+    const currentCoordinate = currentSquare.coordinate;
+
+    if (currentCoordinate[0] == end[0] && currentCoordinate[1] == end[1]) {
+      console.log('found');
+      break;
+    }
+
+    const possibleMoves = currentSquare.possibleMoves;
+
+    possibleMoves.forEach((move) => {
+      queue.push(Square(move, currentSquare));
+    });
   }
 
-  // const shorterMove = getShorterMove(possibleMoves, end);
-  // console.log(shorterMove);
-
-  return [];
+  return path;
 }
 
 // driver script
 (function() {
-  const moves = knightMoves([3,3],[1,2]);
+  const moves = knightMoves([3,3],[3,2]);
   console.log(moves);
 })();
