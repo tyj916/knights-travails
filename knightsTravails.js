@@ -45,7 +45,7 @@ function hasEnd(moves, end) {
   return false;
 }
 
-function Square(coordinate, prev = null) {
+function Move(coordinate, prev = null) {
   const possibleMoves = getPossibleMoves(coordinate);
 
   return {
@@ -55,24 +55,34 @@ function Square(coordinate, prev = null) {
   }
 }
 
-function knightMoves(start, end) {
-  const queue = [Square(start)];
-  const path = [];
+function buildPath(start, end) {
+  const queue = [Move(start)];
 
   while (queue.length > 0) {
-    const currentSquare = queue.shift();
-    const currentCoordinate = currentSquare.coordinate;
+    const currentMove = queue.shift();
+    const currentCoordinate = currentMove.coordinate;
 
     if (currentCoordinate[0] == end[0] && currentCoordinate[1] == end[1]) {
-      console.log('found');
-      break;
+      return currentMove;
     }
 
-    const possibleMoves = currentSquare.possibleMoves;
+    const possibleMoves = currentMove.possibleMoves;
 
     possibleMoves.forEach((move) => {
-      queue.push(Square(move, currentSquare));
+      queue.push(Move(move, currentMove));
     });
+  }
+
+  return null;
+}
+
+function knightMoves(start, end) {
+  let lastMove = buildPath(start, end);
+  const path = [];
+
+  while (lastMove) {
+    path.unshift(lastMove.coordinate);
+    lastMove = lastMove.prev;
   }
 
   return path;
@@ -80,6 +90,6 @@ function knightMoves(start, end) {
 
 // driver script
 (function() {
-  const moves = knightMoves([3,3],[3,2]);
+  const moves = knightMoves([3,3],[7,7]);
   console.log(moves);
 })();
